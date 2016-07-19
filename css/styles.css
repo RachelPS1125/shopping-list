@@ -1,0 +1,56 @@
+body{
+	background-image: url(../images/lined-paper.png);
+	background-repeat: no-repeat;
+	background-size: 786px 1017px;
+	background-position: center top;
+	margin: 0 auto; 
+	max-width: 500px;
+}
+body>*{
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	margin-left: 1px;
+	min-width: 328px;
+}
+h1{
+	margin-bottom: .65em;
+}
+.entry-line{
+	margin-bottom: 1.75em;
+	padding-top: 3px;
+}
+.headings{
+	padding-left: 0;
+	min-width: 330px;
+}
+.headings>li{
+	font-weight: bold;
+	display: initial;
+}
+.bought{
+	padding-right: 150px;
+}
+}
+.list-items{
+	width: 150px;
+	padding-left: 0;
+}
+.list{
+	list-style: none;
+	padding-top: 17px;
+	width: 300px;
+	display: inline-block;
+}
+.delete-button{
+	float: right;
+	margin-right: 40px;
+}
+.check{
+	float: left;
+}
+.checked{
+	text-decoration: line-through;
+}
