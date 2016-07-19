@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$('.list-items').html(localStorage.my_list);
-	var totalItems = localStorage.total_items || 0;
+	var totalItems = parseInt(localStorage.total_items) || 0;
 	var boughtItems = 0;
 	updateCounterTotal();
 	var addItem = function(){
