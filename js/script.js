@@ -3,14 +3,37 @@ $(document).ready(function(){
 	var totalItems = parseInt(localStorage.total_items) || 0;
 	var boughtItems = 0;
 	updateCounterTotal();
-	var addItem = function(){
+	function saveToLocal(){
+		localStorage.my_list = $('.list-items').html();
+		localStorage.total_items = totalItems;
+	}
+	function updateCounterTotal(){
+		$('.total-items').text(totalItems);
+	}
+	function updateCounterBought(){
+		boughtItems = $(':checkbox:checked').length;
+		$('.bought-items').text(boughtItems);
+	}
+	function addItem(){
 		var item = $('input').val();
+		if (!item) {
+			alert('Please enter a list item');
+		}
+		else{
 		$('.list-items').prepend('<li class="list"><input class="check" type="checkbox"/>'+item+'<button class="delete-button">Delete</button></li>');
 		$('.text').val('');
 		totalItems = totalItems+1;
 		updateCounterTotal();
 		saveToLocal();
+		}
 	}
+	function hideLine(){
+		console.log('test');
+		if ($(':checkbox:checked')){  //cannot get this to work
+			$(this).addClass('.hidden'); //abondoning for now
+		}
+	}
+
 	$('.add').click(addItem);
 	$('input').keydown(function(event){
 		if (event.keyCode === 13){
@@ -30,16 +53,5 @@ $(document).ready(function(){
 		updateCounterBought();
 		saveToLocal();
 	})
-	var saveToLocal = function(){
-		localStorage.my_list = $('.list-items').html();
-		localStorage.total_items = totalItems;
-	}
-	function updateCounterTotal(){
-		$('.total-items').text(totalItems);
-	}
-	function updateCounterBought(){
-		boughtItems = $(':checkbox:checked').length;
-		$('.bought-items').text(boughtItems);
-	}
-
+	$('.hide').click(hideLine);
 });
