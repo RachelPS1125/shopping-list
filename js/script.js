@@ -1,8 +1,6 @@
 $(document).ready(function(){
-	$('.list-items').html(localStorage.my_list);
 	var totalItems = parseInt(localStorage.total_items) || 0;
 	var boughtItems = 0;
-	updateCounterTotal();
 	function saveToLocal(){
 		localStorage.my_list = $('.list-items').html();
 		localStorage.total_items = totalItems;
@@ -11,7 +9,7 @@ $(document).ready(function(){
 		$('.total-items').text(totalItems);
 	}
 	function updateCounterBought(){
-		boughtItems = $(':checkbox:checked').length;
+		boughtItems = $('.checked').length;
 		$('.bought-items').text(boughtItems);
 	}
 	function addItem(){
@@ -20,20 +18,36 @@ $(document).ready(function(){
 			alert('Please enter a list item');
 		}
 		else{
-		$('.list-items').prepend('<li class="list"><input class="check" type="checkbox"/>'+item+'<button class="delete-button">Delete</button></li>');
-		$('.text').val('');
-		totalItems = totalItems+1;
+			var found = false;
+			$.each($('.list'), function(i,element){
+				if ($(element).text().indexOf(item)>0){
+					alert('This item is already on your list.')
+					found = true;
+					return false;
+				}else{
+					return false;
+				}
+			})
+			if (!found){
+					$('.list-items').prepend('<li class="list"><input class="check" type="checkbox"/>'+item+'<button class="delete-button">Delete</button></li>');
+					$('.text').val('');
+					totalItems = totalItems+1;
+					updateCounterTotal();
+					saveToLocal();
+			}
+		}
+	}
+	function init(){
+		$('.list-items').html(localStorage.my_list);
+		$.each($('.checked'), function(i,item){
+			var $item = $(item);
+			if($item.hasClass('checked')){
+				$item.children('.check').prop('checked', true);
+			}
+		})
+		updateCounterBought();  
 		updateCounterTotal();
-		saveToLocal();
-		}
 	}
-	function hideLine(){
-		console.log('test');
-		if ($(':checkbox:checked')){  //cannot get this to work
-			$(this).addClass('.hidden'); //abondoning for now
-		}
-	}
-
 	$('.add').click(addItem);
 	$('input').keydown(function(event){
 		if (event.keyCode === 13){
@@ -53,5 +67,13 @@ $(document).ready(function(){
 		updateCounterBought();
 		saveToLocal();
 	})
-	$('.hide').click(hideLine);
+	$('.hide').click(function(){	
+		var checkedItem = $('.list-items').find('.checked').parent();
+		checkedItem.hide();
+	})
+	$('.show').click(function(){	
+		var checkedItem = $('.list-items').find('.checked').parent();
+		checkedItem.show();
+	})
+	init();
 });
