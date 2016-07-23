@@ -19,15 +19,17 @@ $(document).ready(function(){
 		}
 		else{
 			var found = false;
-			$.each($('.list'), function(i,element){
-				if ($(element).text().indexOf(item)>0){
+			$.each($('.list'), (function(i,element){
+				var checkAgainst = $(element).html();
+				console.log(checkAgainst)
+				if (checkAgainst.indexOf(item)>0){
 					alert('This item is already on your list.')
 					found = true;
 					return false;
 				}else{
 					return false;
 				}
-			})
+			}))
 			if (!found){
 					$('.list-items').prepend('<li class="list"><input class="check" type="checkbox"/>'+item+'<button class="delete-button">Delete</button></li>');
 					$('.text').val('');
@@ -68,11 +70,12 @@ $(document).ready(function(){
 		saveToLocal();
 	})
 	$('.hide').click(function(){	
-		var checkedItem = $('.list-items').find('.checked').parent();
+		var checkedItem = $('.list-items').find('.checked');
+		debugger;
 		checkedItem.hide();
 	})
 	$('.show').click(function(){	
-		var checkedItem = $('.list-items').find('.checked').parent();
+		var checkedItem = $('.list-items').find('.checked');
 		checkedItem.show();
 	})
 	init();
